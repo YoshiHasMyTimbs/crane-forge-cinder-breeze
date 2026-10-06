@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>STUDForge | Launch an agent</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { --bg:#121215; --card:#1b1b20; --line:#2c2c33; --text:#f7f7f8; --muted:#a1a1aa; --accent:#ff4d2e; --gold:#ffb703; --ok:#3ddc97; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:Geist, system-ui, sans-serif; }
+  button, input, textarea, select { font:inherit; color:inherit; }
+  a { color:var(--gold); }
+  .wrap { width:min(980px, calc(100% - 28px)); margin:0 auto; }
+  nav { display:flex; justify-content:space-between; align-items:center; padding:16px 0; }
+  .links { display:flex; gap:16px; color:var(--muted); font-size:14px; }
+  .btn { border:1px solid var(--line); background:#23232a; border-radius:999px; padding:8px 14px; cursor:pointer; }
+  .btn.solid { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:650; }
+  h1 { font-size:clamp(36px, 5vw, 56px); letter-spacing:-.045em; line-height:.95; margin:8px 0; }
+  .muted { color:var(--muted); }
+  .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:18px 0; }
+  .step, .panel { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; }
+  label { display:block; color:var(--muted); font-size:12px; margin:10px 0 4px; }
+  input, textarea, select { width:100%; background:#101014; border:1px solid var(--line); border-radius:10px; padding:10px; }
+  textarea { min-height:110px; }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .chips { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  .chip { border:1px solid var(--line); background:#101014; border-radius:999px; padding:6px 10px; cursor:pointer; }
+  .chip.on { border-color:var(--accent); color:#fff; }
+  .log { font-family:"IBM Plex Mono", monospace; font-size:12px; color:var(--ok); white-space:pre-wrap; }
+  .note { background:#2a2114; border:1px solid #4a3b22; color:#efd7a4; border-radius:12px; padding:10px; font-size:13px; }
+  .checks li { margin:6px 0; }
+  @media (max-width:800px) { .steps, .row { grid-template-columns:1fr; } .links { display:none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <strong>STUDForge</strong>
+    <div class="links"><span>Discover</span><span>Launch</span><span>Fees</span></div>
+    <button class="btn solid" id="connectBtn" onclick="connectWallet()">Connect</button>
+  </nav>
+  <p class="muted">Launch an agent</p>
+  <h1>Your prompt is locked at launch.</h1>
+  <p class="muted">It becomes the agent brief and the place file holders can open in Studio. Wallet connect uses Phantom, or Jupiter’s in-app browser if it exposes a Solana provider. One signature confirms the brief. It does not move SOL.</p>
+  <div class="steps">
+    <div class="step"><strong>Fees fund it</strong><p class="muted">50% coding, 25% creator, 25% buyback of the original STUDS mint.</p></div>
+    <div class="step"><strong>It builds itself</strong><p class="muted">Launch writes a Studio place for the ticker.</p></div>
+    <div class="step"><strong>Live check</strong><p class="muted">Open the .rbxlx and press Play before calling it published.</p></div>
+  </div>
+  <div class="panel">
+    <div class="note">Independent pad, not studspad.app. Their Oct 5 post routes 20% of agent fees to buy and burn STUDS and 80% to AI credits. This pad uses your 50/25/25 rule. Buyback mint EHwZjQen7jjfU3SVSHrpkWZCGqRRyTYq3gWbHQXojB3A.</div>
+    <label>1. Pick a genre</label>
+    <div class="chips" id="genres"></div>
+    <label for="prompt">2. Write the prompt</label>
+    <textarea id="prompt" maxlength="600" placeholder="A 12-stage neon obby. Checkpoint every 3 jumps. Win pad pays coins."></textarea>
+    <p class="muted" id="count">0/600</p>
+    <div class="row">
+      <div>
+        <label for="name">3. Agent name</label>
+        <input id="name" placeholder="Volt Run" />
+      </div>
+      <div>
+        <label for="ticker">Ticker</label>
+        <input id="ticker" placeholder="VOLT" />
+      </div>
+    </div>
+    <label for="cover">Cover image</label>
+    <input id="cover" type="file" accept="image/png,image/jpeg,image/gif,image/webp" />
+    <label>4. Fee split</label>
+    <p>50% coding wallet · 25% creator wallet · 25% STUDS buyback</p>
+    <label for="devbuy">Dev buy, optional</label>
+    <select id="devbuy">
+      <option value="0">None</option>
+      <option value="0.1">0.1 SOL</option>
+      <option value="0.5">0.5 SOL</option>
+      <option value="1">1 SOL</option>
+    </select>
+    <h3>Ready to launch</h3>
+    <ul class="checks" id="checks"></ul>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn" onclick="connectWallet()">Connect Phantom / Jupiter</button>
+      <button class="btn solid" onclick="launch()">Sign and build place</button>
+    </div>
+    <p class="log" id="log">Wallet not connected.</p>
+  </div>
+</div>
+<script src="generator.js"></script>
+<script src="placepack.js"></script>
+<script>
+const genres = ["obby","tycoon","simulator","horror","race","arena"];
+let genre = "obby";
+let wallet = null;
+const box = document.getElementById("genres");
+genres.forEach((g) => {
+  const b = document.createElement("button");
+  b.className = "chip" + (g === genre ? " on" : "");
+  b.textContent = g;
+  b.onclick = () => { genre = g; [...box.children].forEach((c) => c.classList.toggle("on", c.textContent === g)); paint(); };
+  box.appendChild(b);
+});
+document.getElementById("prompt").addEventListener("input", paint);
+document.getElementById("name").addEventListener("input", paint);
+document.getElementById("ticker").addEventListener("input", paint);
+function provider() {
+  return window.solana || window.phantom?.solana || null;
+}
+async function connectWallet() {
+  const p = provider();
+  if (!p) {
+    document.getElementById("log").textContent = "No Solana wallet in this browser. Install Phantom, or open this page inside the Jupiter app browser, then press Connect again.";
+    window.open("https://phantom.app/download", "_blank");
+    return;
+  }
+  const res = await p.connect();
+  wallet = res.publicKey.toString();
+  document.getElementById("connectBtn").textContent = wallet.slice(0, 4) + "…" + wallet.slice(-4);
+  document.getElementById("log").textContent = "Connected " + wallet;
+  paint();
+}
+function paint() {
+  const prompt = document.getElementById("prompt").value;
+  document.getElementById("count").textContent = prompt.length + "/600";
+  const items = [
+    [prompt.length >= 40, "Prompt of 40+ characters"],
+    [document.getElementById("name").value.trim().length > 1, "Agent name"],
+    [document.getElementById("ticker").value.trim().length > 1, "Ticker"],
+    [Boolean(document.getElementById("cover").files.length), "Cover image"],
+    [Boolean(wallet), "Wallet connected"]
+  ];
+  document.getElementById("checks").innerHTML = items.map(([ok, label]) => `<li>${ok ? "Ready" : "Missing"} · ${label}</li>`).join("");
+}
+async function launch() {
+  paint();
+  if (!wallet) return connectWallet();
+  const prompt = document.getElementById("prompt").value.trim();
+  const name = document.getElementById("name").value.trim();
+  const ticker = document.getElementById("ticker").value.trim().toUpperCase();
+  if (prompt.length < 40 || !name || !ticker) {
+    document.getElementById("log").textContent = "Need a 40 character prompt, a name, and a ticker.";
+    return;
+  }
+  const p = provider();
+  const message = new TextEncoder().encode([
+    "STUDForge launch",
+    "wallet " + wallet,
+    "name " + name,
+    "ticker " + ticker,
+    "genre " + genre,
+    "devbuy " + document.getElementById("devbuy").value,
+    "split 50 coding / 25 creator / 25 buyback EHwZjQen7jjfU3SVSHrpkWZCGqRRyTYq3gWbHQXojB3A",
+    "prompt " + prompt
+  ].join("\n"));
+  const signed = await p.signMessage(message, "utf8");
+  const xml = buildRbxlx(name, genre, prompt);
+  const errors = checkRbxlx(xml, genre);
+  if (errors.length) {
+    document.getElementById("log").textContent = errors.join("; ");
+    return;
+  }
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([xml], { type: "application/xml" }));
+  a.download = ticker + ".rbxlx";
+  a.click();
+  document.getElementById("log").textContent = "Signed by " + wallet + ". Place downloaded. Signature bytes " + (signed.signature?.length || "ok") + ". This signature confirms the brief. It does not create the mint or send the dev buy.";
+}
+paint();
+</script>
+</body>
+</html>

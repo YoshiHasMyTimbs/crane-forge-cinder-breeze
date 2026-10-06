@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>STUDForge | Solana launchpad for Roblox places</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { --bg:#07080d; --card:#10141c; --line:#262c3a; --text:#f6f3ec; --muted:#9aa3b5; --accent:#ff4d2e; --gold:#ffb703; --ok:#3ddc97; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:Geist, system-ui, sans-serif; }
+  a { color:var(--gold); }
+  button, input, textarea, select { font:inherit; color:inherit; }
+  img { max-width:100%; display:block; }
+  .wrap { width:min(1120px, calc(100% - 28px)); margin:0 auto; }
+  nav { display:flex; justify-content:space-between; align-items:center; padding:16px 0; position:sticky; top:0; background:rgba(7,8,13,.9); backdrop-filter:blur(10px); z-index:2; }
+  .brand { font-weight:760; letter-spacing:-.04em; }
+  .links { display:flex; gap:16px; color:var(--muted); font-size:14px; }
+  .btn { border:1px solid var(--line); background:#171c27; border-radius:999px; padding:8px 14px; cursor:pointer; }
+  .btn.solid { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:650; }
+  .hero { display:grid; grid-template-columns:1.05fr .95fr; gap:22px; align-items:center; padding:28px 0; }
+  h1 { font-size:clamp(38px, 5vw, 62px); line-height:.92; letter-spacing:-.05em; margin:8px 0; }
+  .kicker { color:var(--gold); letter-spacing:.14em; text-transform:uppercase; font-size:12px; font-weight:650; }
+  .lede { color:var(--muted); font-size:18px; }
+  .hero img { border-radius:16px; border:1px solid var(--line); }
+  .split { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .cell { border:1px solid var(--line); border-radius:14px; padding:14px; background:#0d1118; }
+  .cell b { display:block; font-size:26px; }
+  .cell span, .muted { color:var(--muted); font-size:13px; }
+  .panel { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; margin-top:18px; }
+  label { display:block; color:var(--muted); font-size:12px; margin:8px 0 4px; }
+  input, textarea, select { width:100%; background:#0b0e14; border:1px solid var(--line); border-radius:10px; padding:10px; }
+  textarea { min-height:76px; }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:12px; }
+  .card { border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#0d1118; }
+  .card div { padding:10px 12px 12px; }
+  .ca { font-family:"IBM Plex Mono", monospace; font-size:12px; word-break:break-all; }
+  .log { font-family:"IBM Plex Mono", monospace; color:var(--ok); font-size:12px; white-space:pre-wrap; }
+  .note { background:#1a140c; border:1px solid #3c2e16; color:#efd7a4; border-radius:12px; padding:10px; font-size:13px; }
+  footer { color:var(--muted); font-size:12px; padding:28px 0 48px; }
+  @media (max-width:800px) { .hero, .split, .grid, .row { grid-template-columns:1fr; } .links { display:none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <div class="brand">STUDForge</div>
+    <div class="links"><a href="#launch">Launch</a><a href="#places">Places</a><a href="#gallery">Gallery</a></div>
+    <button class="btn solid" onclick="document.getElementById('launch').scrollIntoView({behavior:'smooth'})">Launch</button>
+  </nav>
+  <section class="hero">
+    <div>
+      <div class="kicker">Solana pair · Roblox place</div>
+      <h1>Launch a coin. Ship the place with it.</h1>
+      <p class="lede">Creator fees split 50% to coding, 25% to the creator, and 25% to buybacks of the original STUDS mint. The launch button builds the paired Studio file.</p>
+    </div>
+    <img src="artifacts/rendered/y54sT.jpg" alt="STUDForge place types" />
+  </section>
+  <section class="split">
+    <div class="cell"><b>50%</b><span>Coding. Place build and later script updates.</span></div>
+    <div class="cell"><b>25%</b><span>Creator fee for the launch wallet.</span></div>
+    <div class="cell"><b>25%</b><span>Buyback of original STUDS.</span></div>
+    <div class="cell"><b>Mint</b><span class="ca">EHwZjQen7jjfU3SVSHrpkWZCGqRRyTYq3gWbHQXojB3A</span></div>
+  </section>
+  <section class="panel" id="launch">
+    <div class="note">This site builds the place file and records the split. It does not submit a Solana transaction or ask for a seed phrase. A live route still needs an on-chain program.</div>
+    <div class="row">
+      <div>
+        <label for="name">Coin name</label>
+        <input id="name" value="Volt Run" />
+      </div>
+      <div>
+        <label for="ticker">Ticker</label>
+        <input id="ticker" value="VOLT" />
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="creator">Creator wallet</label>
+        <input id="creator" placeholder="Solana address" />
+      </div>
+      <div>
+        <label for="genre">Place type</label>
+        <select id="genre">
+          <option value="obby">Obby</option>
+          <option value="tycoon">Dropper tycoon</option>
+          <option value="simulator">Coin simulator</option>
+          <option value="horror">Horror rounds</option>
+          <option value="race">Lap race</option>
+          <option value="arena">Arena tag</option>
+        </select>
+      </div>
+    </div>
+    <label for="prompt">Game prompt</label>
+    <textarea id="prompt">Twelve neon platforms, a checkpoint every third jump, and a win pad.</textarea>
+    <label for="fees">Creator fees in SOL</label>
+    <input id="fees" type="number" min="0" step="0.01" value="1" />
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+      <button class="btn solid" onclick="launch()">Build paired place</button>
+      <button class="btn" onclick="downloadPlace()">Download .rbxlx</button>
+    </div>
+    <p class="log" id="log">Idle.</p>
+  </section>
+  <section id="places">
+    <h2>Ready place files</h2>
+    <div class="grid">
+      <a class="card" href="artifacts/studforge/places/obby.rbxlx"><img src="artifacts/rendered/PzzaC.jpg" alt="Obby" /><div><strong>Obby</strong><br><span class="muted">obby.rbxlx</span></div></a>
+      <a class="card" href="artifacts/studforge/places/tycoon.rbxlx"><img src="artifacts/rendered/F4KMG.jpg" alt="Tycoon" /><div><strong>Tycoon</strong><br><span class="muted">tycoon.rbxlx</span></div></a>
+      <a class="card" href="artifacts/studforge/places/simulator.rbxlx"><img src="artifacts/rendered/SimFf.jpg" alt="Simulator" /><div><strong>Simulator</strong><br><span class="muted">simulator.rbxlx</span></div></a>
+      <a class="card" href="artifacts/studforge/places/horror.rbxlx"><img src="artifacts/rendered/H9YZR.jpg" alt="Horror" /><div><strong>Horror</strong><br><span class="muted">horror.rbxlx</span></div></a>
+      <a class="card" href="artifacts/studforge/places/race.rbxlx"><img src="artifacts/rendered/ELuI1.jpg" alt="Race" /><div><strong>Race</strong><br><span class="muted">race.rbxlx</span></div></a>
+      <a class="card" href="artifacts/studforge/places/arena.rbxlx"><img src="artifacts/rendered/iRjXf.jpg" alt="Arena" /><div><strong>Arena</strong><br><span class="muted">arena.rbxlx</span></div></a>
+    </div>
+  </section>
+  <section id="gallery">
+    <h2>Build gallery</h2>
+    <div class="grid" id="galleryGrid"></div>
+  </section>
+  <footer>From github.com/YoshiHasMyTimbs/crane-forge-cinder-breeze. Open a .rbxlx in Roblox Studio and press Play. Buyback mint is STUDS, not a promise of execution.</footer>
+</div>
+<script src="generator.js"></script>
+<script src="placepack.js"></script>
+<script>
+const shots = ["1ngmw","66hFE","9HCsv","ELuI1","ErTd7","F4KMG","H9YZR","HsDDu","JolYc","KiUdW","KwUVF","M36pJ","OVDbv","PzzaC","R3aCS","SimFf","TavAh","ZbBQ0","bFVXC","bwXcE","cjPkr","cyKHq","hztUd","iRjXf","kzMgc","lh2b9","qpojs","tus7T","v9bob","y54sT"];
+const gallery = document.getElementById("galleryGrid");
+shots.forEach((id) => {
+  const card = document.createElement("a");
+  card.className = "card";
+  card.href = "img/" + id + ".jpg";
+  card.innerHTML = `<img src="artifacts/rendered/${id}.jpg" alt="${id}" />`;
+  gallery.appendChild(card);
+});
+function launch() {
+  const name = document.getElementById("name").value.trim() || "Place";
+  const ticker = (document.getElementById("ticker").value.trim() || "COIN").toUpperCase();
+  const genre = document.getElementById("genre").value;
+  const prompt = document.getElementById("prompt").value.trim();
+  const fees = Number(document.getElementById("fees").value) || 0;
+  const xml = buildRbxlx(name, genre, prompt);
+  const errors = checkRbxlx(xml, genre);
+  if (errors.length) {
+    document.getElementById("log").textContent = errors.join("; ");
+    return;
+  }
+  window.__xml = xml;
+  window.__name = ticker + ".rbxlx";
+  document.getElementById("log").textContent = `$${ticker} paired with ${name}. ${xml.length} bytes. Split ${ (fees*0.5).toFixed(4) } coding / ${ (fees*0.25).toFixed(4) } creator / ${ (fees*0.25).toFixed(4) } STUDS buyback.`;
+}
+function downloadPlace() {
+  if (!window.__xml) launch();
+  if (!window.__xml) return;
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([window.__xml], { type: "application/xml" }));
+  a.download = window.__name;
+  a.click();
+}
+</script>
+</body>
+</html>
