@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>STUDForge Launchpad</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { --bg:#07080d; --card:#10141c; --line:#262c3a; --text:#f6f3ec; --muted:#9aa3b5; --accent:#ff4d2e; --gold:#ffb703; --ok:#3ddc97; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:Geist, system-ui, sans-serif; }
+  button, input, textarea, select { font:inherit; color:inherit; }
+  a { color:var(--gold); }
+  .wrap { width:min(1120px, calc(100% - 28px)); margin:0 auto; }
+  nav { display:flex; justify-content:space-between; align-items:center; padding:16px 0; border-bottom:1px solid var(--line); }
+  .brand { font-weight:750; letter-spacing:-.04em; }
+  .btn { border:1px solid var(--line); background:#171c27; border-radius:999px; padding:8px 14px; cursor:pointer; }
+  .btn.solid { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:650; }
+  h1 { font-size:clamp(36px, 5vw, 60px); letter-spacing:-.05em; line-height:.94; margin:18px 0 8px; }
+  .lede { color:var(--muted); max-width:640px; }
+  .split { display:grid; grid-template-columns:1.2fr .8fr 1fr 1fr; gap:10px; margin:22px 0; }
+  .cell { border:1px solid var(--line); border-radius:14px; padding:14px; background:#0d1118; }
+  .cell b { display:block; font-size:28px; }
+  .cell span { color:var(--muted); font-size:13px; }
+  .layout { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .panel { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; }
+  label { display:block; color:var(--muted); font-size:12px; margin:8px 0 4px; }
+  input, textarea, select { width:100%; background:#0b0e14; border:1px solid var(--line); border-radius:10px; padding:10px; }
+  textarea { min-height:80px; }
+  .ca { font-family:"IBM Plex Mono", monospace; font-size:12px; word-break:break-all; }
+  .log { font-family:"IBM Plex Mono", monospace; color:var(--ok); font-size:12px; white-space:pre-wrap; }
+  .note { background:#1a140c; border:1px solid #3c2e16; color:#efd7a4; border-radius:12px; padding:10px; font-size:13px; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  td { border-top:1px solid var(--line); padding:8px 0; }
+  @media (max-width:800px) { .split, .layout { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <div class="brand">STUDForge Launchpad</div>
+    <button class="btn solid" onclick="launch()">Launch paired game</button>
+  </nav>
+  <h1>A coin launch paired with a Roblox place.</h1>
+  <p class="lede">Each launch records a ticker, a game prompt, and the fee rule. Creator fees on that coin are split 50% to coding, 25% to the creator, and 25% to buybacks of the original STUDS mint.</p>
+  <div class="split">
+    <div class="cell"><b>50%</b><span>Coding. Pays the place build and later script updates.</span></div>
+    <div class="cell"><b>25%</b><span>Creator fee. Paid to the wallet that launched the pair.</span></div>
+    <div class="cell"><b>25%</b><span>Buyback of original STUDS.</span></div>
+    <div class="cell"><b class="ca">STUDS</b><span class="ca">EHwZjQen7jjfU3SVSHrpkWZCGqRRyTYq3gWbHQXojB3A</span></div>
+  </div>
+  <div class="layout">
+    <div class="panel">
+      <div class="note">This page builds the paired place file and writes the split. It does not submit a Solana transaction and it does not take a wallet key. A live route needs a program that sends 50/25/25 on chain.</div>
+      <label for="name">Coin name</label>
+      <input id="name" value="Volt Run" />
+      <label for="ticker">Ticker</label>
+      <input id="ticker" value="VOLT" />
+      <label for="creator">Creator wallet</label>
+      <input id="creator" placeholder="Your Solana address" />
+      <label for="genre">Game type</label>
+      <select id="genre">
+        <option value="obby">Obby</option>
+        <option value="tycoon">Dropper tycoon</option>
+        <option value="simulator">Coin simulator</option>
+        <option value="horror">Horror rounds</option>
+        <option value="race">Lap race</option>
+        <option value="arena">Arena tag</option>
+      </select>
+      <label for="prompt">Game prompt</label>
+      <textarea id="prompt">Twelve neon platforms, checkpoints every third jump, win pad pays coins.</textarea>
+      <label for="fees">Creator fees in SOL</label>
+      <input id="fees" type="number" min="0" step="0.01" value="1" />
+      <div style="display:flex;gap:8px;margin-top:12px;">
+        <button class="btn solid" onclick="launch()">Launch pair</button>
+        <button class="btn" onclick="downloadPlace()">Download place</button>
+      </div>
+      <p class="log" id="log">Waiting for a launch.</p>
+    </div>
+    <div class="panel">
+      <strong>Fee split on this launch</strong>
+      <table>
+        <tr><td>Coding</td><td id="coding">0.50 SOL</td></tr>
+        <tr><td>Creator</td><td id="creatorCut">0.25 SOL</td></tr>
+        <tr><td>STUDS buyback</td><td id="buyback">0.25 SOL</td></tr>
+      </table>
+      <p class="ca">Buyback mint<br>EHwZjQen7jjfU3SVSHrpkWZCGqRRyTYq3gWbHQXojB3A</p>
+      <p><a href="https://solscan.io/token/EHwZjQen7jjfU3SVSHrpkWZCGqRRyTYq3gWbHQXojB3A">View STUDS on Solscan</a></p>
+      <h3>Launched pairs</h3>
+      <div id="pairs" class="log">None yet.</div>
+    </div>
+  </div>
+</div>
+<script src="generator.js"></script>
+<script src="placepack.js"></script>
+<script>
+const BUYBACK = "EHwZjQen7jjfU3SVSHrpkWZCGqRRyTYq3gWbHQXojB3A";
+const pairs = [];
+function splitOf(sol) {
+  const n = Number(sol) || 0;
+  return { coding: n * 0.5, creator: n * 0.25, buyback: n * 0.25 };
+}
+function paintSplit() {
+  const s = splitOf(document.getElementById("fees").value);
+  document.getElementById("coding").textContent = s.coding.toFixed(4) + " SOL";
+  document.getElementById("creatorCut").textContent = s.creator.toFixed(4) + " SOL";
+  document.getElementById("buyback").textContent = s.buyback.toFixed(4) + " SOL";
+}
+document.getElementById("fees").addEventListener("input", paintSplit);
+paintSplit();
+function launch() {
+  const name = document.getElementById("name").value.trim() || "Place";
+  const ticker = document.getElementById("ticker").value.trim().toUpperCase() || "COIN";
+  const creator = document.getElementById("creator").value.trim() || "unset";
+  const genre = document.getElementById("genre").value;
+  const prompt = document.getElementById("prompt").value.trim();
+  const fees = Number(document.getElementById("fees").value) || 0;
+  const xml = buildRbxlx(name, genre, prompt);
+  const errors = checkRbxlx(xml, genre);
+  if (errors.length) {
+    document.getElementById("log").textContent = "Place file failed: " + errors.join("; ");
+    return;
+  }
+  const pair = { name, ticker, creator, genre, fees, split: splitOf(fees), buybackMint: BUYBACK, bytes: xml.length };
+  pairs.unshift(pair);
+  window.__xml = xml;
+  window.__name = ticker + ".rbxlx";
+  document.getElementById("pairs").textContent = pairs.map((p) => `$${p.ticker} · ${p.genre} · ${p.bytes} byte place · coding ${p.split.coding.toFixed(4)} / creator ${p.split.creator.toFixed(4)} / buyback ${p.split.buyback.toFixed(4)}`).join("\n");
+  document.getElementById("log").textContent = "Pair ready. $" + ticker + " is tied to " + name + ". Download the place and open it in Studio. Buybacks target " + BUYBACK + ".";
+  paintSplit();
+}
+function downloadPlace() {
+  if (!window.__xml) launch();
+  if (!window.__xml) return;
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([window.__xml], { type: "application/xml" }));
+  a.download = window.__name;
+  a.click();
+}
+</script>
+</body>
+</html>

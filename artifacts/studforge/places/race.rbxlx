@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+  <Item class="Workspace" referent="RBX00000002">
+    <Properties><string name="Name">Workspace</string></Properties>
+    <Item class="Folder" referent="RBX00000003">
+      <Properties><string name="Name">StudForgeMap</string></Properties>
+      <Item class="Part" referent="RBX00000004">
+    <Properties>
+      <string name="Name">SpawnPad</string>
+      <bool name="Anchored">true</bool>
+      <Color3 name="Color"><R>0.1411764705882353</R><G>0.1568627450980392</G><B>0.20392156862745098</B></Color3>
+      <Vector3 name="Size"><X>24</X><Y>1</Y><Z>24</Z></Vector3>
+      <CoordinateFrame name="CFrame"><X>0</X><Y>1</Y><Z>0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+      <token name="Material">256</token>
+    </Properties>
+  </Item>
+<Item class="Part" referent="RBX00000005">
+    <Properties>
+      <string name="Name">Gate0</string>
+      <bool name="Anchored">true</bool>
+      <Color3 name="Color"><R>1</R><G>0.8235294117647058</G><B>0.23529411764705882</B></Color3>
+      <Vector3 name="Size"><X>10</X><Y>1</Y><Z>6</Z></Vector3>
+      <CoordinateFrame name="CFrame"><X>40</X><Y>2</Y><Z>0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+      <token name="Material">256</token>
+    </Properties>
+  </Item>
+<Item class="Part" referent="RBX00000006">
+    <Properties>
+      <string name="Name">Gate1</string>
+      <bool name="Anchored">true</bool>
+      <Color3 name="Color"><R>0.27450980392156865</R><G>0.5098039215686274</G><B>1</B></Color3>
+      <Vector3 name="Size"><X>10</X><Y>1</Y><Z>6</Z></Vector3>
+      <CoordinateFrame name="CFrame"><X>28.284271247461902</X><Y>2</Y><Z>28.2842712474619</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+      <token name="Material">256</token>
+    </Properties>
+  </Item>
+<Item class="Part" referent="RBX00000007">
+    <Properties>
+      <string name="Name">Gate2</string>
+      <bool name="Anchored">true</bool>
+      <Color3 name="Color"><R>0.27450980392156865</R><G>0.5098039215686274</G><B>1</B></Color3>
+      <Vector3 name="Size"><X>10</X><Y>1</Y><Z>6</Z></Vector3>
+      <CoordinateFrame name="CFrame"><X>2.4492935982947065e-15</X><Y>2</Y><Z>40</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+      <token name="Material">256</token>
+    </Properties>
+  </Item>
+<Item class="Part" referent="RBX00000008">
+    <Properties>
+      <string name="Name">Gate3</string>
+      <bool name="Anchored">true</bool>
+      <Color3 name="Color"><R>0.27450980392156865</R><G>0.5098039215686274</G><B>1</B></Color3>
+      <Vector3 name="Size"><X>10</X><Y>1</Y><Z>6</Z></Vector3>
+      <CoordinateFrame name="CFrame"><X>-28.2842712474619</X><Y>2</Y><Z>28.284271247461902</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+      <token name="Material">256</token>
+    </Properties>
+  </Item>
+<Item class="Part" referent="RBX00000009">
+    <Properties>
+      <string name="Name">Gate4</string>
+      <bool name="Anchored">true</bool>
+      <Color3 name="Color"><R>0.27450980392156865</R><G>0.5098039215686274</G><B>1</B></Color3>
+      <Vector3 name="Size"><X>10</X><Y>1</Y><Z>6</Z></Vector3>
+      <CoordinateFrame name="CFrame"><X>-40</X><Y>2</Y><Z>4.898587196589413e-15</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+      <token name="Material">256</token>
+    </Properties>
+  </Item>
+<Item class="Part" referent="RBX0000000a">
+    <Properties>
+      <string name="Name">Gate5</string>
+      <bool name="Anchored">true</bool>
+      <Color3 name="Color"><R>0.27450980392156865</R><G>0.5098039215686274</G><B>1</B></Color3>
+      <Vector3 name="Size"><X>10</X><Y>1</Y><Z>6</Z></Vector3>
+      <CoordinateFrame name="CFrame"><X>-28.28427124746191</X><Y>2</Y><Z>-28.2842712474619</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+      <token name="Material">256</token>
+    </Properties>
+  </Item>
+<Item class="Part" referent="RBX0000000b">
+    <Properties>
+      <string name="Name">Gate6</string>
+      <bool name="Anchored">true</bool>
+      <Color3 name="Color"><R>0.27450980392156865</R><G>0.5098039215686274</G><B>1</B></Color3>
+      <Vector3 name="Size"><X>10</X><Y>1</Y><Z>6</Z></Vector3>
+      <CoordinateFrame name="CFrame"><X>-7.347880794884118e-15</X><Y>2</Y><Z>-40</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+      <token name="Material">256</token>
+    </Properties>
+  </Item>
+<Item class="Part" referent="RBX0000000c">
+    <Properties>
+      <string name="Name">Gate7</string>
+      <bool name="Anchored">true</bool>
+      <Color3 name="Color"><R>0.27450980392156865</R><G>0.5098039215686274</G><B>1</B></Color3>
+      <Vector3 name="Size"><X>10</X><Y>1</Y><Z>6</Z></Vector3>
+      <CoordinateFrame name="CFrame"><X>28.284271247461895</X><Y>2</Y><Z>-28.28427124746191</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+      <token name="Material">256</token>
+    </Properties>
+  </Item>
+    </Item>
+    <Item class="SpawnLocation" referent="RBX0000000d">
+      <Properties>
+        <string name="Name">SpawnLocation</string>
+        <bool name="Anchored">true</bool>
+        <bool name="Neutral">true</bool>
+        <Color3 name="Color"><R>1</R><G>0.6901960784313725</G><B>0.23529411764705882</B></Color3>
+        <Vector3 name="Size"><X>6</X><Y>1</Y><Z>6</Z></Vector3>
+        <CoordinateFrame name="CFrame"><X>0</X><Y>2.5</Y><Z>0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+      </Properties>
+    </Item>
+  </Item>
+  <Item class="Lighting" referent="RBX0000000e">
+    <Properties><string name="Name">Lighting</string></Properties>
+  </Item>
+  <Item class="ServerScriptService" referent="RBX0000000f">
+    <Properties><string name="Name">ServerScriptService</string></Properties>
+    <Item class="Script" referent="RBX00000010">
+      <Properties>
+        <string name="Name">StudForgeGame</string>
+        <ProtectedString name="Source"><![CDATA[-- Test race.server.lua
+-- STUDForge place script. Paste into ServerScriptService as a Script.
+-- Prompt: place file test
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Debris = game:GetService("Debris")
+
+local TITLE = "Test race"
+local GENRE = "race"
+
+local remotes = ReplicatedStorage:FindFirstChild("StudForgeRemotes")
+if not remotes then
+	remotes = Instance.new("Folder")
+	remotes.Name = "StudForgeRemotes"
+	remotes.Parent = ReplicatedStorage
+end
+local stateEvent = remotes:FindFirstChild("State")
+if not stateEvent then
+	stateEvent = Instance.new("RemoteEvent")
+	stateEvent.Name = "State"
+	stateEvent.Parent = remotes
+end
+
+local function notify(player, message)
+	stateEvent:FireClient(player, message)
+end
+
+local function ensureLeaderstats(player)
+	if player:FindFirstChild("leaderstats") then
+		return
+	end
+	local stats = Instance.new("Folder")
+	stats.Name = "leaderstats"
+	local coins = Instance.new("IntValue")
+	coins.Name = "Coins"
+	coins.Value = 0
+	coins.Parent = stats
+	local score = Instance.new("IntValue")
+	score.Name = "Score"
+	score.Value = 0
+	score.Parent = stats
+	stats.Parent = player
+end
+
+Players.PlayerAdded:Connect(function(player)
+	ensureLeaderstats(player)
+	player.CharacterAdded:Connect(function()
+		player:SetAttribute("Won", nil)
+	end)
+end)
+for _, player in Players:GetPlayers() do
+	ensureLeaderstats(player)
+end
+
+local function part(props)
+	local p = Instance.new("Part")
+	p.Anchored = true
+	p.TopSurface = Enum.SurfaceType.Smooth
+	p.BottomSurface = Enum.SurfaceType.Smooth
+	p.Material = props.Material or Enum.Material.SmoothPlastic
+	p.Color = props.Color or Color3.fromRGB(40, 44, 56)
+	p.Size = props.Size or Vector3.new(8, 1, 8)
+	p.CFrame = props.CFrame or CFrame.new(0, 2, 0)
+	p.Name = props.Name or "Part"
+	p.Parent = props.Parent
+	return p
+end
+
+local function clearMap()
+	local old = workspace:FindFirstChild("StudForgeMap")
+	if old then
+		old:Destroy()
+	end
+	local folder = Instance.new("Folder")
+	folder.Name = "StudForgeMap"
+	folder.Parent = workspace
+	part({
+		Name = "SpawnPad",
+		Size = Vector3.new(24, 1, 24),
+		CFrame = CFrame.new(0, 1, 0),
+		Color = Color3.fromRGB(36, 40, 52),
+		Parent = folder,
+	})
+	return folder
+end
+
+local function playerFromHit(hit)
+	local model = hit and hit.Parent
+	if not model then
+		return nil
+	end
+	return Players:GetPlayerFromCharacter(model)
+end
+
+local map = clearMap()
+for i = 0, 7 do
+	local angle = i / 8 * math.pi * 2
+	local cp = part({
+		Name = "Gate" .. i,
+		Size = Vector3.new(10, 1, 6),
+		CFrame = CFrame.new(math.cos(angle) * 40, 2, math.sin(angle) * 40),
+		Color = i == 0 and Color3.fromRGB(255, 210, 60) or Color3.fromRGB(70, 130, 255),
+		Parent = map,
+	})
+	cp.Touched:Connect(function(hit)
+		local player = playerFromHit(hit)
+		if not player then
+			return
+		end
+		local nextGate = player:GetAttribute("NextGate") or 0
+		if i ~= nextGate then
+			return
+		end
+		if i == 7 then
+			local lap = (player:GetAttribute("Lap") or 1) + 1
+			player:SetAttribute("Lap", lap)
+			player:SetAttribute("NextGate", 0)
+			if lap > 3 then
+				player.leaderstats.Score.Value += 10
+				notify(player, "Finished")
+			else
+				notify(player, "Lap " .. lap)
+			end
+		else
+			player:SetAttribute("NextGate", i + 1)
+			notify(player, "Gate " .. (i + 1))
+		end
+	end)
+end
+
+print("[STUDForge] " .. TITLE .. " (" .. GENRE .. ") loaded")
+]]></ProtectedString>
+      </Properties>
+    </Item>
+  </Item>
+  <Item class="StarterPlayer" referent="RBX00000011">
+    <Properties><string name="Name">StarterPlayer</string></Properties>
+    <Item class="StarterPlayerScripts" referent="RBX00000012">
+      <Properties><string name="Name">StarterPlayerScripts</string></Properties>
+      <Item class="LocalScript" referent="RBX00000013">
+        <Properties>
+          <string name="Name">StatusBanner</string>
+          <ProtectedString name="Source"><![CDATA[-- StatusBanner.client.lua
+-- Paste into StarterPlayerScripts as a LocalScript.
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local player = Players.LocalPlayer
+local remotes = ReplicatedStorage:WaitForChild("StudForgeRemotes")
+local stateEvent = remotes:WaitForChild("State")
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "StudForgeStatus"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.new(0, 420, 0, 36)
+label.Position = UDim2.new(0.5, -210, 0, 16)
+label.BackgroundColor3 = Color3.fromRGB(16, 18, 24)
+label.TextColor3 = Color3.fromRGB(255, 176, 60)
+label.Font = Enum.Font.GothamMedium
+label.TextSize = 16
+label.Text = "STUDForge ready"
+label.Parent = gui
+
+stateEvent.OnClientEvent:Connect(function(message)
+	label.Text = tostring(message)
+end)
+]]></ProtectedString>
+        </Properties>
+      </Item>
+    </Item>
+  </Item>
+</roblox>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>STUDForge | Build a Roblox place</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { --bg:#07080d; --card:#10141c; --line:#242a36; --text:#f5f2eb; --muted:#9aa3b5; --accent:#ff4d2e; --gold:#ffb703; --ok:#3ddc97; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:radial-gradient(900px 400px at 80% -10%, #2a140e, transparent 50%), var(--bg); color:var(--text); font-family:Geist, system-ui, sans-serif; }
+  button, input, textarea, select { font:inherit; color:inherit; }
+  a { color:inherit; text-decoration:none; }
+  .wrap { width:min(1180px, calc(100% - 28px)); margin:0 auto; }
+  nav { display:flex; align-items:center; justify-content:space-between; padding:16px 0; }
+  .brand { font-weight:750; letter-spacing:-.04em; font-size:20px; }
+  .nav-links { display:flex; gap:18px; color:var(--muted); font-size:14px; }
+  .btn { border:1px solid var(--line); background:#161b25; border-radius:999px; padding:8px 14px; cursor:pointer; }
+  .btn.solid { background:var(--accent); border-color:var(--accent); color:white; font-weight:650; }
+  .hero { display:grid; grid-template-columns:1.2fr .8fr; gap:28px; padding:28px 0 10px; }
+  .kicker { color:var(--gold); letter-spacing:.14em; text-transform:uppercase; font-size:12px; font-weight:650; }
+  h1 { font-size:clamp(40px, 6vw, 68px); line-height:.92; letter-spacing:-.05em; margin:10px 0; }
+  .lede { color:var(--muted); font-size:18px; max-width:560px; }
+  .stats { display:flex; gap:22px; margin-top:22px; }
+  .stats b { display:block; font-size:28px; }
+  .stats span { color:var(--muted); font-size:12px; }
+  .panel { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:16px; }
+  label { display:block; color:var(--muted); font-size:12px; margin:8px 0 4px; }
+  input, textarea, select { width:100%; background:#0b0e14; border:1px solid var(--line); border-radius:12px; padding:11px; }
+  textarea { min-height:88px; }
+  .actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  .note { color:#efd7a4; background:#1a140c; border:1px solid #3c2e16; border-radius:12px; padding:10px; font-size:13px; }
+  .steps { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin:26px 0; }
+  .step { border:1px solid var(--line); border-radius:14px; padding:12px; background:#0c1017; }
+  .step em { color:var(--accent); font-style:normal; font-size:12px; }
+  .step p { color:var(--muted); font-size:13px; margin:6px 0 0; }
+  .head { display:flex; justify-content:space-between; align-items:end; }
+  .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .card { border:1px solid var(--line); border-radius:16px; overflow:hidden; background:#0d1118; cursor:pointer; text-align:left; }
+  .thumb { height:92px; display:flex; align-items:end; padding:10px; font-weight:700; }
+  .meta { padding:10px 12px 12px; color:var(--muted); font-size:12px; }
+  .meta strong { color:var(--text); display:block; font-size:14px; }
+  .pill { color:var(--ok); font-size:11px; }
+  pre { background:#090c12; border:1px solid var(--line); border-radius:12px; padding:12px; overflow:auto; max-height:280px; font-family:"IBM Plex Mono", monospace; font-size:12px; }
+  .log { font-family:"IBM Plex Mono", monospace; color:var(--ok); font-size:12px; white-space:pre-wrap; }
+  footer { color:var(--muted); font-size:12px; padding:28px 0 50px; }
+  @media (max-width:900px) { .hero,.steps,.grid { grid-template-columns:1fr; } .nav-links { display:none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <div class="brand">STUDForge</div>
+    <div class="nav-links"><a href="#play">Places</a><a href="#build">Build</a><a href="#file">Place file</a></div>
+    <button class="btn solid" onclick="document.getElementById('build').scrollIntoView({behavior:'smooth'})">Build a place</button>
+  </nav>
+  <section class="hero">
+    <div>
+      <div class="kicker">Same launchpad shape. Real Studio file.</div>
+      <h1>Prompt in. Place file out.</h1>
+      <p class="lede">This pad follows the studspad layout: prompt, build steps, and a grid of places. The difference is the button writes a .rbxlx with the map, spawn, server script, and status banner already inside.</p>
+      <div class="stats">
+        <div><b>6</b><span>place types</span></div>
+        <div><b id="bytes">0</b><span>bytes in last file</span></div>
+        <div><b>Studio</b><span>open, then Play</span></div>
+      </div>
+    </div>
+    <div class="panel" id="build">
+      <div class="note">Not studspad.app. No wallet, no fake live games, no copied experience names. Open the file in Roblox Studio and press Play.</div>
+      <label for="title">Place title</label>
+      <input id="title" value="Volt Run" />
+      <label for="genre">Type</label>
+      <select id="genre">
+        <option value="obby">Obby</option>
+        <option value="tycoon">Dropper tycoon</option>
+        <option value="simulator">Coin simulator</option>
+        <option value="horror">Horror rounds</option>
+        <option value="race">Lap race</option>
+        <option value="arena">Arena tag</option>
+      </select>
+      <label for="prompt">Prompt</label>
+      <textarea id="prompt">Twelve neon platforms, a checkpoint every third jump, and a win pad.</textarea>
+      <div class="actions">
+        <button class="btn solid" onclick="build()">Build place file</button>
+        <button class="btn" onclick="downloadPlace()">Download .rbxlx</button>
+      </div>
+      <p class="log" id="log">Idle.</p>
+    </div>
+  </section>
+  <section class="steps">
+    <div class="step"><em>01</em><strong>Prompt</strong><p>Title, type, one rule.</p></div>
+    <div class="step"><em>02</em><strong>Map</strong><p>Parts are written into the place.</p></div>
+    <div class="step"><em>03</em><strong>Scripts</strong><p>Server loop plus status banner.</p></div>
+    <div class="step"><em>04</em><strong>File</strong><p>Download the .rbxlx.</p></div>
+    <div class="step"><em>05</em><strong>Play</strong><p>Studio, open file, press Play.</p></div>
+  </section>
+  <section id="play">
+    <div class="head"><h2>Places you can open</h2><span class="pill">Click a card, then download</span></div>
+    <div class="grid" id="grid"></div>
+  </section>
+  <section id="file">
+    <h2>What is in the file</h2>
+    <pre id="preview">Build a place to preview the file.</pre>
+  </section>
+  <footer>Independent builder. Layout only is similar to public launchpad pages. Publish from your own Roblox account after Play works.</footer>
+</div>
+<script src="generator.js"></script>
+<script src="placepack.js"></script>
+<script>
+const cards = [
+  ["Volt Run", "obby", "#ff4d2e", "Twelve neon platforms, a checkpoint every third jump, and a win pad."],
+  ["Foundry Drop", "tycoon", "#ffb703", "A dropper, a collector, and an upgrade button."],
+  ["Pocket Mint", "simulator", "#3ddc97", "A mint pad and a rebirth pad."],
+  ["Lampblack", "horror", "#7aa2ff", "A dark lobby and a 60 second seeker round."],
+  ["Circuit Lap", "race", "#e85d04", "Eight gates and three laps."],
+  ["Signal Tag", "arena", "#c77dff", "One player is It for 75 seconds."]
+];
+const grid = document.getElementById("grid");
+cards.forEach(([title, genre, color, prompt]) => {
+  const btn = document.createElement("button");
+  btn.className = "card";
+  btn.innerHTML = `<div class="thumb" style="background:linear-gradient(160deg, ${color}, #111)">${title}</div><div class="meta"><strong>${title}</strong>${genre} · place file</div>`;
+  btn.onclick = () => {
+    document.getElementById("title").value = title;
+    document.getElementById("genre").value = genre;
+    document.getElementById("prompt").value = prompt;
+    build();
+  };
+  grid.appendChild(btn);
+});
+function build() {
+  const title = document.getElementById("title").value || "Place";
+  const genre = document.getElementById("genre").value;
+  const prompt = document.getElementById("prompt").value;
+  const xml = buildRbxlx(title, genre, prompt);
+  const errors = checkRbxlx(xml, genre);
+  window.__xml = xml;
+  window.__name = title.replace(/\s+/g, "") + ".rbxlx";
+  document.getElementById("bytes").textContent = xml.length;
+  document.getElementById("preview").textContent = xml.slice(0, 1800) + "\n...";
+  document.getElementById("log").textContent = errors.length
+    ? "File check failed: " + errors.join("; ")
+    : "File check passed. Download, open in Roblox Studio, press Play. Look for StudForgeMap and the spawn pad.";
+}
+function downloadPlace() {
+  if (!window.__xml) build();
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([window.__xml], { type: "application/xml" }));
+  a.download = window.__name;
+  a.click();
+}
+build();
+</script>
+</body>
+</html>
