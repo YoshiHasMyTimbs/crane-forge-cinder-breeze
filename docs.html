@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>STUDForge Docs | Read API</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { --bg:#121215; --card:#1c1c21; --line:#2e2e36; --text:#f7f7f8; --muted:#a1a1aa; --accent:#ff5a36; --gold:#ffb703; --ok:#3ddc97; --code:#0e0e12; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:Geist, system-ui, sans-serif; }
+  a { color:var(--gold); text-decoration:none; }
+  button, input, textarea, select { font:inherit; color:inherit; }
+  nav { height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 22px; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(18,18,21,.92); backdrop-filter:blur(12px); z-index:5; }
+  .brand { font-weight:720; letter-spacing:-.04em; }
+  .nav-links { display:flex; gap:18px; color:var(--muted); font-size:14px; }
+  .btn { border:1px solid var(--line); background:#23232a; border-radius:999px; padding:8px 14px; cursor:pointer; }
+  .btn.solid { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:640; }
+  .layout { display:grid; grid-template-columns:220px minmax(0,760px); gap:28px; width:min(1100px, calc(100% - 32px)); margin:0 auto; padding:28px 0 64px; }
+  aside a { display:block; color:var(--muted); font-size:14px; padding:7px 0; }
+  aside a:hover { color:var(--text); }
+  h1 { font-size:46px; letter-spacing:-.045em; line-height:.98; margin:8px 0 12px; }
+  h2 { margin-top:36px; letter-spacing:-.03em; }
+  p, li { color:#d6d6dc; line-height:1.55; }
+  .muted { color:var(--muted); }
+  .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .card, .panel { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; }
+  .card b { display:block; margin-bottom:4px; }
+  pre, code { font-family:"IBM Plex Mono", ui-monospace, monospace; }
+  pre { background:var(--code); border:1px solid var(--line); border-radius:12px; padding:14px; overflow:auto; font-size:12.5px; line-height:1.5; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th, td { text-align:left; border-bottom:1px solid var(--line); padding:8px 6px; }
+  .method { display:inline-block; font-size:12px; font-weight:700; border-radius:6px; padding:3px 6px; margin-right:6px; }
+  .get { background:#143024; color:var(--ok); }
+  .post { background:#3a2418; color:#ffb088; }
+  .live { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+  .live div { background:#101014; border:1px solid var(--line); border-radius:12px; padding:10px; }
+  .live b { display:block; font-size:20px; }
+  .tabs button { margin-right:6px; }
+  @media (max-width:860px) { .layout, .cards, .live { grid-template-columns:1fr; } .nav-links { display:none; } }
+</style>
+</head>
+<body>
+<nav>
+  <div class="brand">STUDForge</div>
+  <div class="nav-links"><a href="#overview">Docs</a><a href="#read-api">Read API</a><a href="launch.html">Launch</a></div>
+  <button class="btn solid" onclick="location.href='launch.html'">Connect</button>
+</nav>
+<div class="layout">
+  <aside>
+    <a href="#overview">Overview</a>
+    <a href="#quickstart">Quickstart</a>
+    <a href="#fees">Fee routing</a>
+    <a href="#cycle">Agent cycle</a>
+    <a href="#launch-api">Launch API</a>
+    <a href="#read-api">Read API</a>
+    <a href="#verify">Verify on chain</a>
+    <a href="#limits">Limits</a>
+  </aside>
+  <main>
+    <p class="muted">Documentation</p>
+    <h1>Build Roblox games with an agent that pays its own way.</h1>
+    <p>This page follows the public studspad docs, including the read API at <code>/api/stats</code>. It is not the studspad.app site. Live numbers below are read from their public endpoint.</p>
+
+    <section id="overview">
+      <h2>Overview</h2>
+      <p>A launch turns a prompt into a token. Part of every trade’s creator fee goes to an agent wallet. Each time that wallet earns 0.005 SOL, it writes a Luau script, checks that it compiles, and publishes the place.</p>
+      <div class="cards">
+        <div class="card"><b>Prompt</b><span class="muted">Locked after launch. 40–600 characters.</span></div>
+        <div class="card"><b>Fees</b><span class="muted">25–100% of creator fees routed to the agent.</span></div>
+        <div class="card"><b>Builds</b><span class="muted">Luau scripts, then a place file.</span></div>
+      </div>
+    </section>
+
+    <section id="quickstart">
+      <h2>Quickstart</h2>
+      <ol>
+        <li>Connect Phantom or Solflare. You pay network fees plus 0.01 SOL of agent fuel.</li>
+        <li>Name, ticker, genre, cover, and a 40–600 character prompt.</li>
+        <li>Pick the agent share. Their default is 50% agent, 50% launcher.</li>
+        <li>Sign once. Token, fee split, and optional first buy are one approval.</li>
+        <li>Watch fees, the next build, and every script on the server page.</li>
+      </ol>
+    </section>
+
+    <section id="fees">
+      <h2>Fee routing</h2>
+      <p>The split is written into pump.fun’s fee-sharing config. Two shareholders: launcher and agent wallet. The agent share is 25% to 100%.</p>
+      <table>
+        <tr><th>Shareholder</th><th>Share</th><th>Used for</th></tr>
+        <tr><td>Launcher</td><td>50% default</td><td>Claimable creator fee.</td></tr>
+        <tr><td>Agent wallet</td><td>50% default</td><td>Network fees, then a build every 0.005 SOL.</td></tr>
+      </table>
+      <p>Of every fee the agent receives, 20% buys and burns <code>EHwZjQen7jjfU3SVSHrpkWZCGqRRyTYq3gWbHQXojB3A</code> through Jupiter. 80% stays for AI credits and builds. Amounts under 0.002 SOL wait for the next cycle. Your requested pad rule was 50% coding, 25% creator, 25% buyback. That is a different split from the one in their docs.</p>
+    </section>
+
+    <section id="cycle">
+      <h2>Agent cycle</h2>
+      <ol>
+        <li>Collect pending creator fees.</li>
+        <li>If the agent earned 0.005 SOL since the last build, start one.</li>
+        <li>Write the next script from the prompt and earlier builds.</li>
+        <li>Compile it. A failing build gets one repair.</li>
+        <li>Pack the scripts into a place and publish.</li>
+      </ol>
+      <p>Anyone can wake an agent with <code>POST /api/servers/:mint/tick</code>. The 10 minute cooldown still applies.</p>
+      <pre>TITLE: Lava Rises
+SUMMARY: Lava now climbs every round. Survive 90 seconds for a Win.
+
+```lua
+-- shipped as Script "Build 3 · Lava Rises"
+```</pre>
+    </section>
+
+    <section id="launch-api">
+      <h2>Launch API</h2>
+      <p><span class="method post">POST</span><code>/api/launch/prepare</code></p>
+      <p>Multipart form: image file plus a data JSON field. Returns unsigned transactions. The wallet signs. The server never holds keys.</p>
+      <pre>{
+  "mint": "LAVA…pump",
+  "agentWallet": "AgNt…9xQe",
+  "lastValidBlockHeight": 318204551,
+  "txs": ["AQAAAA…", "AQAAAA…"],
+  "roles": ["create", "share"]
+}</pre>
+      <p><span class="method post">POST</span><code>/api/launch/confirm</code></p>
+      <p>JSON with mint, signed txs, and lastValidBlockHeight. An instruction that differs from prepare is rejected with 422.</p>
+    </section>
+
+    <section id="read-api">
+      <h2>Read API</h2>
+      <p>Public and keyless. Stats allow requests from any origin. Refreshed about every 15 seconds.</p>
+      <p><span class="method get">GET</span><code>https://www.studspad.app/api/stats</code></p>
+      <div class="live" id="live">
+        <div><b>—</b><span class="muted">servers</span></div>
+        <div><b>—</b><span class="muted">builds</span></div>
+        <div><b>—</b><span class="muted">publishes</span></div>
+        <div><b>—</b><span class="muted">SOL to agents</span></div>
+      </div>
+      <div class="tabs" style="margin-top:12px;">
+        <button class="btn" onclick="show('curl')">curl</button>
+        <button class="btn" onclick="show('js')">JavaScript</button>
+        <button class="btn" onclick="show('py')">Python</button>
+      </div>
+      <pre id="sample">curl -s https://www.studspad.app/api/stats | jq '{servers, builds, publishes, agentLamports}'</pre>
+      <p><span class="method post">POST</span><code>/api/servers/:mint/tick</code></p>
+      <pre>curl -s -X POST https://www.studspad.app/api/servers/<mint>/tick</pre>
+      <p><span class="method get">GET</span><code>/api/servers/:mint/place</code></p>
+      <pre>curl -L -o place.rbxlx https://www.studspad.app/api/servers/<mint>/place</pre>
+      <h3>Live response</h3>
+      <pre id="raw">Loading the public stats endpoint…</pre>
+    </section>
+
+    <section id="verify">
+      <h2>Verify on chain</h2>
+      <p>Fee program <code>pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ</code>. Sharing config PDA is seeds <code>sharing-config</code> plus the mint. Each shareholder is 32 bytes plus a u16 bps at offset 80, stride 34.</p>
+    </section>
+
+    <section id="limits">
+      <h2>Limits</h2>
+      <table>
+        <tr><td>Prompt</td><td>40–600 characters</td></tr>
+        <tr><td>Agent share</td><td>25–100% of creator fees</td></tr>
+        <tr><td>Dev buy</td><td>Up to 5 SOL</td></tr>
+        <tr><td>Cover</td><td>png, jpeg, or gif, max 4 MB</td></tr>
+        <tr><td>Agent fuel</td><td>0.01 SOL at launch</td></tr>
+        <tr><td>Cooldown</td><td>10 minutes per server</td></tr>
+        <tr><td>Build threshold</td><td>0.005 SOL of new agent fees</td></tr>
+      </table>
+    </section>
+  </main>
+</div>
+<script>
+const samples = {
+  curl: "curl -s https://www.studspad.app/api/stats | jq '{servers, builds, publishes, agentLamports}'",
+  js: "const stats = await fetch('https://www.studspad.app/api/stats').then(r => r.json())\nconsole.log(stats.servers, stats.builds, stats.agentLamports)",
+  py: "import requests\nstats = requests.get('https://www.studspad.app/api/stats').json()\nprint(stats['servers'], stats['builds'], stats['agentLamports'])"
+};
+function show(kind) { document.getElementById('sample').textContent = samples[kind]; }
+fetch('https://www.studspad.app/api/stats')
+  .then(r => r.json())
+  .then(data => {
+    const sol = (data.agentLamports / 1e9).toFixed(3);
+    const boxes = document.querySelectorAll('#live b');
+    boxes[0].textContent = data.servers;
+    boxes[1].textContent = data.builds;
+    boxes[2].textContent = data.publishes;
+    boxes[3].textContent = sol;
+    document.getElementById('raw').textContent = JSON.stringify({
+      servers: data.servers,
+      routed: data.routed,
+      livePlaces: data.livePlaces,
+      agentLamports: data.agentLamports,
+      builds: data.builds,
+      publishes: data.publishes,
+      luauLines: data.luauLines,
+      updatedAt: data.updatedAt
+    }, null, 2);
+  })
+  .catch(err => { document.getElementById('raw').textContent = String(err); });
+</script>
+</body>
+</html>
